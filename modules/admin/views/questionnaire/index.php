@@ -68,8 +68,9 @@ $this->title = 'Questionnaires';
                 'attribute' => 'is_male',
                 'label' => 'Gender',
                 'value' => function ($model) {
-                    return $model->is_male ? 'male' : 'female';
-                }
+                    return $model->is_male ? '<i class="fas fa-male fa-lg"></i> male' : '<i class="fas fa-female fa-lg"></i> female';
+                },
+                'format' => 'html',
             ],
             'rate',
 //            'comment:text',
