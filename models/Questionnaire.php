@@ -40,6 +40,8 @@ class Questionnaire extends \yii\db\ActiveRecord
             [['created_at'], 'safe'],
             [['name'], 'string', 'max' => 32],
             [['email'], 'string', 'max' => 255],
+            [['email'], 'email'],
+            [['rate'], 'number', 'min' => 1, 'max' => 10],
             [['phone'], 'string', 'max' => 20],
             [['region', 'city'], 'string', 'max' => 64],
         ];
