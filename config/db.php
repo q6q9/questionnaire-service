@@ -9,7 +9,7 @@ $password = ArrayHelper::getValue($_ENV, 'DB_PASSWORD', '');
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=' . $host . ';dbname=' . $password,
+    'dsn' => 'mysql:host=' . $host . ';dbname=' . $dbname,
     'username' => $username,
     'password' => $password,
     'charset' => 'utf8',
