@@ -2,10 +2,10 @@
 
 namespace app\models;
 
-use Yii;
+use app\helpers\CountryHelper;
 
 /**
- * This is the model class for table "questionnairies".
+ * This is the model class for table "questionnaires".
  *
  * @property int $id
  * @property string $name
@@ -25,7 +25,7 @@ class Questionnaire extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'questionnairies';
+        return 'questionnaires';
     }
 
     /**
@@ -44,6 +44,8 @@ class Questionnaire extends \yii\db\ActiveRecord
             [['rate'], 'number', 'min' => 1, 'max' => 10],
             [['phone'], 'string', 'max' => 20],
             [['region', 'city'], 'string', 'max' => 64],
+            [['region'], 'exist', 'targetClass' => City::class, 'targetAttribute' => ['region' => 'country']],
+            [['city'], 'exist', 'targetClass' => City::class, 'targetAttribute' => ['city' => 'city']],
         ];
     }
 
@@ -59,7 +61,7 @@ class Questionnaire extends \yii\db\ActiveRecord
             'phone' => 'Phone',
             'region' => 'Region',
             'city' => 'City',
-            'is_male' => 'Is Male',
+            'is_male' => 'Gender',
             'rate' => 'Rate',
             'comment' => 'Comment',
             'created_at' => 'Created At',

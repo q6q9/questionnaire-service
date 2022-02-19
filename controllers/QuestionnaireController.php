@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\helpers\CountryHelper;
 use app\models\Questionnaire;
 use Yii;
 use yii\base\InvalidArgumentException;
@@ -23,8 +24,14 @@ class QuestionnaireController extends Controller
      */
     public function actionBegin()
     {
-        return $this->render('index', [
-            'model' => new Questionnaire(),
+        $attributes = Yii::$app->request->getQueryParam('Questionnaire');
+        $questionnaire = new Questionnaire($attributes);
+
+        $cities = CountryHelper::citiesByCountry($questionnaire->region);
+
+        return $this->render('begin', [
+            'model' => $questionnaire,
+            'cities' => array_combine($cities, $cities)
         ]);
     }
 

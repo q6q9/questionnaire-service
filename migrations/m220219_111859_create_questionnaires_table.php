@@ -3,16 +3,16 @@
 use yii\db\Migration;
 
 /**
- * Handles the creation of table `{{%questionnairies}}`.
+ * Handles the creation of table `{{%questionnaires}}`.
  */
-class m220219_111859_create_questionnairies_table extends Migration
+class m220219_111859_create_questionnaires_table extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-        $this->createTable('{{%questionnairies}}', [
+        $this->createTable('{{%questionnaires}}', [
             'id' => $this->primaryKey(),
             'name' => $this->string(32)->notNull(),
             'email' => $this->string()->notNull(),
@@ -32,6 +32,6 @@ class m220219_111859_create_questionnairies_table extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('{{%questionnairies}}');
+        $this->dropTable('{{%questionnaires}}');
     }
 }
