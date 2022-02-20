@@ -4,7 +4,7 @@
 Copy "example.env" to ".env" and define real DB connection parameters
 ### bash:
 ```
-composer install
+composer update
 php yii migrate
 php yii serve
 ```
