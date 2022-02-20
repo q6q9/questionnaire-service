@@ -34,7 +34,8 @@
     "yiisoft/yii2-httpclient": "^2.0",
     "fakerphp/faker": "^1.19",
     "moonlandsoft/yii2-phpexcel": "*",
-    "2amigos/yii2-chartjs-widget": "~2.0"
+    "2amigos/yii2-chartjs-widget": "~2.0",
+    "ext-json": "*"
   },
   "require-dev": {
     "yiisoft/yii2-debug": "~2.1.0",

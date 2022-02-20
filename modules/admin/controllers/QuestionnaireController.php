@@ -2,9 +2,11 @@
 
 namespace app\modules\admin\controllers;
 
+use app\models\charts\ChartByAttributeForm;
 use app\models\Questionnaire;
 use app\search\QuestionnaireSearch;
 use moonland\phpexcel\Excel;
+use Yii;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
@@ -53,7 +55,6 @@ class QuestionnaireController extends Controller
         $dataManyCount = Questionnaire::find()
             ->select(['SUBSTRING_INDEX(email, \'@\', -1) as host', 'COUNT(email) as count'])
             ->groupBy(['SUBSTRING_INDEX(email, \'@\', -1)'])
-            ->asArray()
             ->having(['>', 'COUNT(email)', 100])
             ->asArray()
             ->all();
@@ -61,7 +62,6 @@ class QuestionnaireController extends Controller
         $dataNotManyCount = Questionnaire::find()
             ->select(['SUBSTRING_INDEX(email, \'@\', -1) as host', 'COUNT(email) as count'])
             ->groupBy(['SUBSTRING_INDEX(email, \'@\', -1)'])
-            ->asArray()
             ->having(['>', 'COUNT(email)', 10])
             ->asArray()
             ->all();
@@ -76,6 +76,23 @@ class QuestionnaireController extends Controller
         return $this->render('chart-email-hosts', [
             'labels' => [array_keys($dataManyCount), array_keys($dataNotManyCount)],
             'counts' => [array_values($dataManyCount), array_values($dataNotManyCount)]
+        ]);
+    }
+
+    public function actionChartByAttribute()
+    {
+        $model = new ChartByAttributeForm(Yii::$app->request->getQueryParam('ChartByAttributeForm'));
+
+        $data = $model->data();
+
+        $attributes = (new Questionnaire)->attributes();
+
+        return $this->render('chart-by-attribute', [
+            'labels' => array_keys($data),
+            'data' => array_values($data),
+            'totalCount' => Questionnaire::find()->count(),
+            'model' => $model,
+            'attributes' => array_combine($attributes, $attributes)
         ]);
     }
 

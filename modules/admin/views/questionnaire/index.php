@@ -62,7 +62,12 @@ $this->title = 'Questionnaires';
                 <a class="dropdown-item" href="/admin/questionnaire/chart-year-by-gender">
                     Years of passed questionnaires by gender
                 </a>
-                <a class="dropdown-item" href="/admin/questionnaire/chart-email-hosts">Emails hosts</a>
+                <a class="dropdown-item" href="/admin/questionnaire/chart-email-hosts">
+                    Emails hosts
+                </a>
+                <a class="dropdown-item" href="/admin/questionnaire/chart-by-attribute?ChartByAttributeForm[attribute]=region">
+                    Chart by attribute
+                </a>
             </div>
         </div>
     </div>

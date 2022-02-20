@@ -2,6 +2,7 @@
 /** @var array $labels */
 /** @var array $femaleData */
 /** @var array $maleData */
+
 /** @var View $this */
 
 use dosamigos\chartjs\ChartJs;
@@ -9,7 +10,18 @@ use yii\web\View;
 
 $this->title = 'Chart of years of passed questionnaires by gender'
 ?>
-
+<div class="mb-5">
+    <a class="btn btn-primary" href="/admin/questionnaire/chart-year-by-gender">
+        Years of passed questionnaires by gender
+    </a>
+    <a class="btn btn-dark" href="/admin/questionnaire/chart-email-hosts">
+        Emails hosts
+    </a>
+    <a class="btn btn-secondary"
+       href="/admin/questionnaire/chart-by-attribute?ChartByAttributeForm[attribute]=region">
+        Chart by attribute
+    </a>
+</div>
 <?= ChartJs::widget([
     'type' => 'line',
     'options' => [
