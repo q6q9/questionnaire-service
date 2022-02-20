@@ -19,18 +19,17 @@ class QuestionnaireFactory
 
         $faker = Factory::create();
 
-        $cities = City::find()->select('city')->asArray()->column();
-        $countries = CountryHelper::countries();
-
+        $cities = City::find()->select(['city', 'country'])->asArray()->all();
         $models = [];
 
         for ($i = 0; $i < $count; $i++) {
+            $city = $cities[array_rand($cities)];
             $models [] = [
                 'name' => $faker->name(),
                 'email' => $faker->email(),
                 'phone' => $faker->phoneNumber(),
-                'region' => $countries[array_rand($countries)],
-                'city' => $cities[array_rand($cities)],
+                'region' => $city['country'],
+                'city' => $city['city'],
                 'is_male' => !rand(0, 1),
                 'rate' => $faker->randomDigit() % 10 + 1,
                 'comment' => $faker->text(),
