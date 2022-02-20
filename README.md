@@ -17,6 +17,8 @@ php yii questionnaires-factory
 # php yii questionnaires-factory 30000
 ```
 
+If not download Excel data, check this: https://stackoverflow.com/a/65748236
+
 ## Using:
 ### Credentials:
 ```
