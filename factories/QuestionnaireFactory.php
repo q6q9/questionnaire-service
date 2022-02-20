@@ -1,18 +1,28 @@
 <?php
 
+namespace app\factories;
+
 use app\helpers\CountryHelper;
 use app\models\City;
 use app\models\Questionnaire;
 use Faker\Factory;
+use Yii;
 
 class QuestionnaireFactory
 {
     public static function generate($count)
     {
+        if ($count === 0) {
+            return;
+        }
+        $count = abs($count);
+
         $faker = Factory::create();
 
         $cities = City::find()->select('city')->asArray()->column();
         $countries = CountryHelper::countries();
+
+        $models = [];
 
         for ($i = 0; $i < $count; $i++) {
             $models [] = [
