@@ -5,9 +5,10 @@ namespace app\modules\admin\controllers;
 use app\models\Questionnaire;
 use app\search\QuestionnaireSearch;
 use moonland\phpexcel\Excel;
+use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 class QuestionnaireController extends Controller
 {
@@ -27,6 +28,55 @@ class QuestionnaireController extends Controller
                 ],
             ]
         );
+    }
+
+    public function actionChartYearByGender()
+    {
+        $data = Questionnaire::find()
+            ->select(['YEAR(created_at) as year', 'COUNT(id) as count', 'is_male'])
+            ->where(['<', 'YEAR(created_at)', 2021])
+            ->groupBy(['YEAR(created_at)', 'is_male'])
+            ->asArray()
+            ->all();
+
+        $data = ArrayHelper::index($data, 'year', 'is_male');
+
+        return $this->render('chart-year-by-gender', [
+            'labels' => array_keys(ArrayHelper::index($data[0], 'year')),
+            'femaleData' => array_keys(ArrayHelper::index($data[0], 'count')),
+            'maleData' => array_keys(ArrayHelper::index($data[1], 'count')),
+        ]);
+    }
+
+    public function actionChartEmailHosts()
+    {
+        $dataManyCount = Questionnaire::find()
+            ->select(['SUBSTRING_INDEX(email, \'@\', -1) as host', 'COUNT(email) as count'])
+            ->groupBy(['SUBSTRING_INDEX(email, \'@\', -1)'])
+            ->asArray()
+            ->having(['>', 'COUNT(email)', 100])
+            ->asArray()
+            ->all();
+
+        $dataNotManyCount = Questionnaire::find()
+            ->select(['SUBSTRING_INDEX(email, \'@\', -1) as host', 'COUNT(email) as count'])
+            ->groupBy(['SUBSTRING_INDEX(email, \'@\', -1)'])
+            ->asArray()
+            ->having(['>', 'COUNT(email)', 10])
+            ->asArray()
+            ->all();
+
+        $dataManyCount = ArrayHelper::map($dataManyCount, 'host', 'count');
+        $dataManyCount['others'] = Questionnaire::find()->count() - array_reduce($dataManyCount, function ($sum, $count) {
+                return $sum + $count;
+            });
+
+        $dataNotManyCount = ArrayHelper::map($dataNotManyCount, 'host', 'count');
+
+        return $this->render('chart-email-hosts', [
+            'labels' => [array_keys($dataManyCount), array_keys($dataNotManyCount)],
+            'counts' => [array_values($dataManyCount), array_values($dataNotManyCount)]
+        ]);
     }
 
     /**

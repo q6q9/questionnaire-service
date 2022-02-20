@@ -7,10 +7,10 @@
 use app\models\Questionnaire;
 use kartik\daterange\DateRangePicker;
 use yii\bootstrap4\LinkPager;
-use yii\helpers\Html;
-use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
+use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\web\JsExpression;
 use yii\widgets\Pjax;
 
@@ -23,33 +23,49 @@ $this->title = 'Questionnaires';
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?php Pjax::begin(['id' => 'pjax']); ?>
-    <p>
-        <?= Html::button('<i class="fas fa-redo"></i> Reset', [
-            'class' => 'btn btn-primary',
-            'onclick' => new JsExpression('(function() {
+    <div class="d-flex justify-content-between my-3">
+        <div>
+            <?= Html::button('<i class="fas fa-redo"></i> Reset', [
+                'class' => 'btn btn-primary',
+                'onclick' => new JsExpression('(function() {
                                 $.pjax.reload({
                                     url : "/admin/questionnaire",
                                     container: "#pjax", 
                                     async: false
                                 });
         })()')]) ?>
-        <?= Html::a(
-            '<i class="fas fa-download"></i> Download records from this page (' . $dataProvider->count . ')',
-            ['/admin/questionnaire?download=true'],
-            [
-                'class' => 'btn btn-warning',
-                'data-pjax' => 0,
-                'target' => '_blank'
-            ]) ?>
-        <?= Html::a(
-            '<i class="fas fa-download"></i> Download ALL records with these filters (' . $dataProvider->totalCount . ')',
-            ['/admin/questionnaire?download=all&' . http_build_query(Yii::$app->request->queryParams)],
-            [
-                'class' => 'btn btn-danger',
-                'data-pjax' => 0,
-                'target' => '_blank'
-            ]) ?>
-    </p>
+            <?= Html::a(
+                '<i class="fas fa-download"></i> Download records from this page (' . $dataProvider->count . ')',
+                ['/admin/questionnaire?download=true'],
+                [
+                    'class' => 'btn btn-warning',
+                    'data-pjax' => 0,
+                    'target' => '_blank'
+                ]) ?>
+            <?= Html::a(
+                '<i class="fas fa-download"></i> Download ALL records with these filters (' . $dataProvider->totalCount . ')',
+                ['/admin/questionnaire?download=all&' . http_build_query(Yii::$app->request->queryParams)],
+                [
+                    'class' => 'btn btn-danger',
+                    'data-pjax' => 0,
+                    'target' => '_blank'
+                ]) ?>
+        </div>
+        <div class="dropleft show">
+            <button class="btn btn-info dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                    data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-chart-line"></i> Chart
+            </button>
+
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" href="/admin/questionnaire/chart-year-by-gender">
+                    Years of passed questionnaires by gender
+                </a>
+                <a class="dropdown-item" href="/admin/questionnaire/chart-email-hosts">Emails hosts</a>
+            </div>
+        </div>
+    </div>
 
 
     <?= GridView::widget([
