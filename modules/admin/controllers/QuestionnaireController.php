@@ -15,7 +15,7 @@ use yii\web\NotFoundHttpException;
 class QuestionnaireController extends Controller
 {
     /**
-     * @inheritDoc
+     * @return array
      */
     public function behaviors()
     {
@@ -32,6 +32,9 @@ class QuestionnaireController extends Controller
         );
     }
 
+    /**
+     * @return string
+     */
     public function actionChartYearByGender()
     {
         $data = Questionnaire::find()
@@ -50,6 +53,9 @@ class QuestionnaireController extends Controller
         ]);
     }
 
+    /**
+     * @return string
+     */
     public function actionChartEmailHosts()
     {
         $dataManyCount = Questionnaire::find()
@@ -79,6 +85,9 @@ class QuestionnaireController extends Controller
         ]);
     }
 
+    /**
+     * @return string
+     */
     public function actionChartByAttribute()
     {
         $model = new ChartByAttributeForm(Yii::$app->request->getQueryParam('ChartByAttributeForm'));
