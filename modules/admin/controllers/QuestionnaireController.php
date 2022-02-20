@@ -130,14 +130,16 @@ class QuestionnaireController extends Controller
         if ($download === 'all') {
             return Excel::widget([
                 'models' => $dataProvider->query->all(),
-                'mode' => 'export'
+                'mode' => 'export',
+                'asAttachment' => true
             ]);
         }
 
         if ($download) {
             return Excel::widget([
                 'models' => $dataProvider->getModels(),
-                'mode' => 'export'
+                'mode' => 'export',
+                'asAttachment' => true
             ]);
         }
 

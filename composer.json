@@ -33,7 +33,7 @@
     "kartik-v/yii2-widget-select2": "^2.2",
     "yiisoft/yii2-httpclient": "^2.0",
     "fakerphp/faker": "^1.19",
-    "moonlandsoft/yii2-phpexcel": "*",
+    "moonlandsoft/yii2-phpexcel": "2.*",
     "2amigos/yii2-chartjs-widget": "~2.0",
     "ext-json": "*"
   },
