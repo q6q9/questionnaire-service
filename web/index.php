@@ -9,5 +9,8 @@ try {
 }
 
 $config = require __DIR__ . '/../config/web.php';
-
+try{
 (new yii\web\Application($config))->run();
+}catch (Exception $e){
+    die(json_encode($e->getMessage()));
+}
