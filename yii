@@ -21,7 +21,7 @@ if (\yii\helpers\ArrayHelper::getValue(getenv(), 'YII_ENV', 'production') == 'de
     defined('YII_ENV') or define('YII_ENV', 'dev');
 }
 
-require __DIR__ . '/../vendor/yiisoft/yii2/Yii.php';
+require __DIR__ . '/vendor/yiisoft/yii2/Yii.php';
 
 $config = require __DIR__ . '/config/console.php';
 
