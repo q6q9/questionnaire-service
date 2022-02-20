@@ -42,6 +42,7 @@ class QuestionnaireController extends Controller
     {
         $attributes = Yii::$app->request->getBodyParam('Questionnaire');
         $questionnaire = new Questionnaire($attributes);
+        $questionnaire->created_at = date('Y-m-d H:i:s');
 
         if (!$questionnaire->save()) {
             throw new InvalidArgumentException('Incorrect data');

@@ -42,17 +42,18 @@ class m220219_192234_create_cities_table extends Migration
             ->send();
 
         if (!$response->isOk) {
-            throw new Exception('Bad response');
-        }
-
-
-        $models = [];
-        foreach ($response->data['data'] as $object) {
-            foreach ($object['cities'] as $city){
-                $models [] = [
-                    'country' => $object['country'],
-                    'city' => $city
-                ];
+            $this->execute(file_get_contents(__DIR__ . '/../sql/cities.sql'));
+            return;
+//            throw new Exception('Bad response');
+        } else {
+            $models = [];
+            foreach ($response->data['data'] as $object) {
+                foreach ($object['cities'] as $city) {
+                    $models [] = [
+                        'country' => $object['country'],
+                        'city' => $city
+                    ];
+                }
             }
         }
 

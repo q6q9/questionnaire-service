@@ -7,6 +7,7 @@ use app\models\Questionnaire;
 use app\search\QuestionnaireSearch;
 use moonland\phpexcel\Excel;
 use Yii;
+use \Exception;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
@@ -34,6 +35,7 @@ class QuestionnaireController extends Controller
 
     /**
      * @return string
+     * @throws Exception
      */
     public function actionChartYearByGender()
     {
@@ -43,6 +45,10 @@ class QuestionnaireController extends Controller
             ->groupBy(['YEAR(created_at)', 'is_male'])
             ->asArray()
             ->all();
+
+        if (!$data) {
+            throw new Exception('No content', 204);
+        }
 
         $data = ArrayHelper::index($data, 'year', 'is_male');
 
@@ -55,6 +61,7 @@ class QuestionnaireController extends Controller
 
     /**
      * @return string
+     * @throws Exception
      */
     public function actionChartEmailHosts()
     {
@@ -71,6 +78,10 @@ class QuestionnaireController extends Controller
             ->having(['>', 'COUNT(email)', 10])
             ->asArray()
             ->all();
+
+        if (!$dataNotManyCount) {
+            throw new Exception('No content', 204);
+        }
 
         $dataManyCount = ArrayHelper::map($dataManyCount, 'host', 'count');
         $dataManyCount['others'] = Questionnaire::find()->count() - array_reduce($dataManyCount, function ($sum, $count) {
